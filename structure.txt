@@ -1,0 +1,19 @@
+math_bot_project/
+├── bot/
+│   ├── __init__.py
+│   ├── main.py               # Логика Aiogram бота
+│   ├── bot_control.py        # FastAPI для управления
+│   ├── handlers/             # Хэндлеры команд
+│   │   ├── __init__.py
+│   │   ├── open_day.py
+│   │   └── games.py
+│   └── requirements.txt      # aiogram3, fastapi, uvicorn
+├── web/
+│   ├── templates/
+│   │   └── control.html      # HTML с кнопками
+│   ├── app.py               # Flask сервер
+│   └── requirements.txt     # flask, requests
+├── docker-compose.yml        # Конфигурация контейнеров
+├── Dockerfile.bot            # Сборка для бота
+├── Dockerfile.web            # Сборка для Flask
+└── .env.example              # Шаблон переменных окружения

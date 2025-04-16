@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление МатБотом</title>
+    <style>
+        .control-panel {
+            max-width: 600px;
+            margin: 2rem auto;
+            text-align: center;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        #status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="control-panel">
+        <h1>Панель управления ботом</h1>
+        <div>
+            <button class="btn" onclick="sendCommand('start')">▶️ Запустить</button>
+            <button class="btn" onclick="sendCommand('stop')">⏹ Остановить</button>
+            <button class="btn" onclick="sendCommand('check')"> Статус</button>
+        </div>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        async function sendCommand(action) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = "Отправка команды...";
+            statusDiv.style.background = "#fff3cd";
+            
+            try {
+                const response = await fetch(`/api/bot/${action}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                const data = await response.json();
+                statusDiv.textContent = `Статус: ${data.status}`;
+                statusDiv.style.background = data.status.includes('error') ? '#f8d7da' : '#d1e7dd';
+            } catch (error) {
+                statusDiv.textContent = `Ошибка: ${error.message}`;
+                statusDiv.style.background = '#f8d7da';
+            }
+        }
+    </script>
+</body>
+</html>
